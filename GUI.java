@@ -39,7 +39,7 @@ public class GUI extends JFrame implements ActionListener
     private boolean setTableEnabled = false;
     private String message;
     private Font font = new Font("Arial", Font.BOLD, 100);
-    private int movesLeft = 1;
+    private int remainingMoves = 1;
 
     //===============================  GUI  ========================================//
     public GUI() //This is the constructor
@@ -131,33 +131,33 @@ public class GUI extends JFrame implements ActionListener
         if(AI == JOptionPane.NO_OPTION){
             for(int currentMove=1; currentMove <= (size * size); ++currentMove) 
             {
-                if(source == btnEmpty[currentMove] && movesLeft < (size * size) + 1)  
+                if(source == btnEmpty[currentMove] && remainingMoves < (size * size) + 1)  
                 {
                     btnEmptyClicked = true;
-                    BusinessLogic.GetMove(currentMove, movesLeft, font, 
+                    BusinessLogic.GetMove(currentMove, remainingMoves, font, 
                         btnEmpty, startingPlayer);              
                     btnEmpty[currentMove].setEnabled(false);
                     pnlPlayingField.requestFocus();
-                    ++movesLeft;
+                    ++remainingMoves;
                 }
             }
         }
         else{
             for(int currentMove=1; currentMove <= (size * size); ++currentMove) 
             {
-                if(source == btnEmpty[currentMove] && movesLeft < (size * size) + 1)  
+                if(source == btnEmpty[currentMove] && remainingMoves < (size * size) + 1)  
                 {
                     btnEmptyClicked = true;
-                    BusinessLogic.GetMove(currentMove, movesLeft, font, 
+                    BusinessLogic.GetMove(currentMove, remainingMoves, font, 
                         btnEmpty, startingPlayer);              
                     btnEmpty[currentMove].setEnabled(false);
                     pnlPlayingField.requestFocus();
-                    movesLeft++;
-                    
-                    if(movesLeft < (size * size) + 1){
-                        AI(currentMove, movesLeft, 
+                    remainingMoves++;
+
+                    if(remainingMoves < (size * size) + 1){
+                        AI(currentMove, remainingMoves, 
                             btnEmpty, startingPlayer);
-                        movesLeft++;
+                        remainingMoves++;
                     }
                 }
             }
@@ -167,10 +167,10 @@ public class GUI extends JFrame implements ActionListener
         if(btnEmptyClicked) 
         {
             inGame = true;
-            if(AI == JOptionPane.YES_OPTION && movesLeft < (size * size) + 2){
-                movesLeft--;
+            if(AI == JOptionPane.YES_OPTION && remainingMoves < (size * size) + 2){
+                remainingMoves--;
                 CheckWin();
-                movesLeft++;
+                remainingMoves++;
             }
             CheckWin();
             btnEmptyClicked = false;
@@ -286,7 +286,7 @@ public class GUI extends JFrame implements ActionListener
             pnlPlayingField,pnlBottom,radioPanel);
         BusinessLogic.ShowGame(pnlSouth,pnlPlayingField);       
 
-        movesLeft = 1;
+        remainingMoves = 1;
 
         for(int x=1; x <= (size * size); ++x)   
         {
@@ -297,13 +297,46 @@ public class GUI extends JFrame implements ActionListener
         win = false;        
     }
 
-    private void CheckWin() 
-    {   
+    public void AI(int currentMove, int remainingMoves, JButton btnEmpty[], String startingPlayer){
         String player;
+        int a;
+        do{
+            a = (int)(Math.random() * (size * size)) + 1;
+        }while(!btnEmpty[a].getText().equals(""));
+        
+        for (int i =0; i < size; i+= size){
+            for(int j=i+1; j< size -2; j++){
+                if(startingPlayer.equals("X")){
+                    if (btnEmpty[i].equals("X")&(btnEmpty[j].equals("X"))){
+                        if((remainingMoves) % 2 != 0)
+                        {               
+                            a = j;
+                        }
+                        else
+                        {
+                            a=j;
+                        }
+                    }
+                }
+                else{
+                    if (btnEmpty[i].equals("X")&(btnEmpty[j].equals("X"))){
+                        if((remainingMoves) % 2 != 0)
+                        {               
+                            player = "O";
+                        }
+                        else
+                        {
+                            player  = "X";
+                        }
+                    }
+                }
+            }
+        }
+        
         if(startingPlayer.equals("X"))
         {
-            if((movesLeft - 1) % 2 != 0)
-            {				
+            if((remainingMoves) % 2 != 0)
+            {               
                 player = "X";
             }
             else
@@ -313,7 +346,38 @@ public class GUI extends JFrame implements ActionListener
         }
         else
         {
-            if((movesLeft - 1) % 2 != 0)
+            if((remainingMoves) % 2 != 0)
+            {
+                player = "O";
+            }
+            else
+            {
+                player = "X";
+            }
+        }
+        
+        btnEmpty[a].setFont(font);
+        btnEmpty[a].setText(player);
+        btnEmpty[a].setEnabled(false);
+    }
+
+    private void CheckWin() 
+    {   
+        String player;
+        if(startingPlayer.equals("X"))
+        {
+            if((remainingMoves - 1) % 2 != 0)
+            {               
+                player = "X";
+            }
+            else
+            {
+                player  = "O";
+            }
+        }
+        else
+        {
+            if((remainingMoves - 1) % 2 != 0)
             {
                 player = "O";
             }
@@ -418,36 +482,4 @@ public class GUI extends JFrame implements ActionListener
         }
     }
 
-    public void AI(int currentMove, int movesLeft, JButton btnEmpty[], String startingPlayer){
-        String player;
-        if(startingPlayer.equals("X"))
-        {
-            if((movesLeft) % 2 != 0)
-            {				
-                player = "X";
-            }
-            else
-            {
-                player  = "O";
-            }
-        }
-        else
-        {
-            if((movesLeft) % 2 != 0)
-            {
-                player = "O";
-            }
-            else
-            {
-                player = "X";
-            }
-        }
-        int a;
-        do{
-            a = (int)(Math.random() * (size * size)) + 1;
-        }while(!btnEmpty[a].getText().equals(""));
-        btnEmpty[a].setFont(font);
-        btnEmpty[a].setText(player);
-        btnEmpty[a].setEnabled(false);
-    }
 }
