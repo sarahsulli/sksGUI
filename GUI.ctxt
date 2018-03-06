@@ -1,16 +1,21 @@
 #BlueJ class context
-comment0.target=GUI
-comment1.params=
-comment1.target=GUI()
-comment2.params=click
-comment2.target=void\ actionPerformed(java.awt.event.ActionEvent)
-comment3.params=
-comment3.target=void\ RedrawGameBoard()
-comment3.text=\n\ \ \ \ ----------------------------------\n\ \ \ \ Start\ of\ all\ the\ other\ methods.\ |\n\ \ \ \ ----------------------------------\n
+comment0.params=
+comment0.target=GUI()
+comment1.params=click
+comment1.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment2.params=
+comment2.target=void\ RedrawGameBoard()
+comment2.text=\r\n\ \ \ \ ----------------------------------\r\n\ \ \ \ Start\ of\ all\ the\ other\ methods.\ |\r\n\ \ \ \ ----------------------------------\r\n
+comment3.params=currentMove\ remainingMoves\ btnEmpty\ startingPlayer
+comment3.target=void\ AI(int,\ int,\ javax.swing.JButton[],\ java.lang.String)
 comment4.params=
 comment4.target=void\ CheckWin()
+<<<<<<< HEAD
 comment5.params=currentMove\ remainingMoves\ btnEmpty\ startingPlayer
 comment5.target=void\ AI(int,\ int,\ javax.swing.JButton[],\ java.lang.String)
 comment6.params=i
 comment6.target=java.lang.String\ playerSetter(int)
 numComments=7
+=======
+numComments=5
+>>>>>>> 421eb6589194208735a3f3fc0a2d4d4354b08c03

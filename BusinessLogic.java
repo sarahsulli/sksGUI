@@ -7,14 +7,14 @@ import java.awt.*;
  
 public class BusinessLogic
 {
-	public static void GetMove(int currentMove, int movesLeft, Font font, JButton btnEmpty[], 
+	public static void GetMove(int currentMove, int remainingMoves, Font font, JButton btnEmpty[], 
 			String startingPlayer)
 	{// gets the current move "X" or "O" for the user & displays to screen
 		btnEmpty[currentMove].setFont(font);
  
 		if(startingPlayer.equals("X"))
 		{
-			if(movesLeft % 2 != 0)
+			if(remainingMoves % 2 != 0)
 			{				
 				btnEmpty[currentMove].setText("X");
 			}
@@ -25,7 +25,7 @@ public class BusinessLogic
 		}
 		else
 		{
-			if(movesLeft % 2 != 0)
+			if(remainingMoves % 2 != 0)
 			{
 				btnEmpty[currentMove].setText("O");
 			}
