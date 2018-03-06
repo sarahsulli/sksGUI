@@ -418,11 +418,170 @@ public class GUI extends JFrame implements ActionListener
         }
     }
 
-    public void AI(int currentMove, int movesLeft, JButton btnEmpty[], String startingPlayer){
+    public void AI(int currentMove, int remainingMoves, JButton btnEmpty[], 
+    String startingPlayer){
+        String player;
+        player = playerSetter(remainingMoves);
+        int posWin = 0;
+        if(size == 3 && btnEmpty[5].getText().equals("")){
+            btnEmpty[5].setFont(font);
+            btnEmpty[5].setText(player);
+            btnEmpty[5].setEnabled(false);
+            return;
+        }
+        for(int i = 1; i < btnEmpty.length; i += size){
+            posWin = 0;
+            for(int j = i; j < i + size; j++){
+                if(!btnEmpty[j].getText().equals(player)){
+                    posWin++;
+                }
+            }
+            if(posWin == 1){
+                for(int j = i; j < i + size; j++){
+                    if(btnEmpty[j].getText().equals("")){
+                        btnEmpty[j].setFont(font);
+                        btnEmpty[j].setText(player);
+                        btnEmpty[j].setEnabled(false);
+                        return;
+                    }
+                }
+            }
+        }
+        for(int i = 1; i < btnEmpty.length / size + 1; i ++){
+            posWin = 0;
+            for(int j = i; j < btnEmpty.length; j += size){
+                if(!btnEmpty[j].getText().equals(player)){
+                    posWin++;
+                }
+            }
+            if(posWin == 1){
+                for(int j = i; j < btnEmpty.length; j += size){
+                    if(btnEmpty[j].getText().equals("")){
+                        btnEmpty[j].setFont(font);
+                        btnEmpty[j].setText(player);
+                        btnEmpty[j].setEnabled(false);
+                        return;
+                    }
+                }
+            }
+        }
+        posWin = 0;
+        for(int i = 1; i < btnEmpty.length; i += (size + 1)){
+            if(!btnEmpty[i].getText().equals(player)){
+                posWin++;
+            }
+        }
+        if(posWin == 1){
+            for(int j = 1; j < btnEmpty.length; j += (size + 1)){
+                if(btnEmpty[j].getText().equals("")){
+                    btnEmpty[j].setFont(font);
+                    btnEmpty[j].setText(player);
+                    btnEmpty[j].setEnabled(false);
+                    return;
+                }
+            }
+        }
+        posWin = 0;
+        for(int i = btnEmpty.length - size; i > 1; i -= (size - 1)){
+            if(!btnEmpty[i].getText().equals(player)){
+                posWin++;
+            }
+        }
+        if(posWin == 1){
+            for(int j = btnEmpty.length - size; j > 1; j -= (size - 1)){
+                if(btnEmpty[j].getText().equals("")){
+                    btnEmpty[j].setFont(font);
+                    btnEmpty[j].setText(player);
+                    btnEmpty[j].setEnabled(false);
+                    return;
+                }
+            }
+        }
+        String rmp1 = playerSetter(remainingMoves + 1);
+        //vert win
+        /**for(int i = 1; i < btnEmpty.length; i += size){
+            posWin = 0;
+            for(int j = i; j < i + size; j++){
+                if(!btnEmpty[j].getText().equals(rmp1)){
+                    posWin++;
+                }
+            }
+            if(posWin == 1){
+                for(int j = i; j < i + size; j++){
+                    if(btnEmpty[j].getText().equals("")){
+                        btnEmpty[j].setFont(font);
+                        btnEmpty[j].setText(player);
+                        btnEmpty[j].setEnabled(false);
+                        return;
+                    }
+                }
+            }
+        }
+        for(int i = 1; i < btnEmpty.length / size + 1; i ++){
+            posWin = 0;
+            for(int j = i; j < btnEmpty.length; j += size){
+                if(!btnEmpty[j].getText().equals(rmp1)){
+                    posWin++;
+                }
+            }
+            if(posWin == 1){
+                for(int j = i; j < btnEmpty.length; j += size){
+                    if(btnEmpty[j].getText().equals("")){
+                        btnEmpty[j].setFont(font);
+                        btnEmpty[j].setText(player);
+                        btnEmpty[j].setEnabled(false);
+                        return;
+                    }
+                }
+            }
+        }*/
+        posWin = 0;
+        for(int i = 1; i < btnEmpty.length; i += (size + 1)){
+            if(!btnEmpty[i].getText().equals(rmp1)){
+                posWin++;
+            }
+        }
+        if(posWin == 1){
+            for(int j = 1; j < btnEmpty.length; j += (size + 1)){
+                if(btnEmpty[j].getText().equals("")){
+                    btnEmpty[j].setFont(font);
+                    btnEmpty[j].setText(player);
+                    btnEmpty[j].setEnabled(false);
+                    return;
+                }
+            }
+        }
+        posWin = 0;
+        for(int i = btnEmpty.length - size; i > 1; i -= (size - 1)){
+            if(!btnEmpty[i].getText().equals(rmp1)){
+                posWin++;
+            }
+        }
+        if(posWin == 1){
+            for(int j = btnEmpty.length - size; j > 1; j -= (size - 1)){
+                if(btnEmpty[j].getText().equals("")){
+                    btnEmpty[j].setFont(font);
+                    btnEmpty[j].setText(player);
+                    btnEmpty[j].setEnabled(false);
+                    return;
+                }
+            }
+        }
+        
+        do{
+            posWin = (int)(Math.random() * (size * size)) + 1;
+        }
+        while(!btnEmpty[posWin].getText().equals(""));
+        btnEmpty[posWin].setFont(font);
+        btnEmpty[posWin].setText(player);
+        btnEmpty[posWin].setEnabled(false);
+    }
+    
+    public String playerSetter(int i){
         String player;
         if(startingPlayer.equals("X"))
         {
-            if((movesLeft) % 2 != 0)
+            if((i) % 2 != 0)
             {				
                 player = "X";
             }
@@ -433,7 +592,7 @@ public class GUI extends JFrame implements ActionListener
         }
         else
         {
-            if((movesLeft) % 2 != 0)
+            if((i) % 2 != 0)
             {
                 player = "O";
             }
@@ -442,12 +601,6 @@ public class GUI extends JFrame implements ActionListener
                 player = "X";
             }
         }
-        int a;
-        do{
-            a = (int)(Math.random() * (size * size)) + 1;
-        }while(!btnEmpty[a].getText().equals(""));
-        btnEmpty[a].setFont(font);
-        btnEmpty[a].setText(player);
-        btnEmpty[a].setEnabled(false);
+        return player;
     }
 }
